@@ -1,7 +1,3 @@
-;;; -*- mode: stumpwm -*-
-;;; StumpWmRC: 
-;;; $Author: tv.raman.tv $
-;;; Keywords: StumpWM, Emacspeak, Audio Desktop
 (in-package :stumpwm)
 ;;; {Variables:
 
@@ -41,12 +37,7 @@
 
 ;;; }
 ;;; {TTS
-
-(load
- (concatenate 'string
-              *emacspeak-dir*
-              "/"
-              "stumpwm/tts.lisp"))
+(load "/home/sektor/.stumpwm.d/tts.lisp")
 (setq *tts-engine* *tts-espeak*)
 (tts-say "TTS: Ready to talk! ")
 
@@ -85,7 +76,7 @@ Use C-\ t to turn it on.")
        *tts-on-icon*
        *tts-off-icon*)))
 
-(define-key *root-map* (kbd "t") "tts-toggle-speak-messages")
+(define-key *root-map* (kbd "T") "tts-toggle-speak-messages")
 
 (defun speak-messages (&rest messages)
   "Speak messages, a list of lines."
@@ -101,44 +92,42 @@ Use C-\ t to turn it on.")
                         (setq *message-hook* (list 'speak-messages))
 
 ;;; }
-;;; {Lock screen C-t D
-
-(defparameter *my-lock-command*
-  "exec emlock")
-
-(defcommand lock-screen ()
-  ()
-  "Lock my screen."
-  (eval-command *my-lock-command*))
-
-(define-key *root-map* (kbd "D") "lock-screen")
-
-;;; }
 ;;; {Chrome:
 
-(defcommand chrome ()
+(defcommand mumble ()
   ()
   "Start  or switch to Chrome."
-  (run-or-raise "$HOME/bin/g" '(:class "chrome" :title "Chrome")))
+  (run-or-raise "/usr/bin/mumble" '(:class "mumble" :title "Mumble")))
 
-(define-key *root-map* (kbd "g") "chrome")
-
+(define-key *root-map* (kbd "m") "mumble")
+(defcommand restart-orca ()
+  ()
+  "Restarts Orca when it hangs or has an update."
+  (run-shell-command "orca --replace"))
+(define-key *root-map* (kbd "O") "restart-orca")
+(defcommand terminal ()
+  ()
+  "Opens up a terminal."
+  (run-or-raise "/usr/bin/lxterminal" '(:class "lxterminal" :title "Lxterminal")))
+(define-key *root-map* (kbd "t") "terminal")
 (sb-ext:run-program
-        "/usr/local/bin/play" 
+        "/usr/bin/play"
         (list
          (concatenate
           'string
           *emacspeak-dir*
           "/sounds/prompts/launch-wm.mp3")))
 
+
+;; Launching various other applications, namely Orca
+(run-commands
+"restart-orca")
 ;;; }
 ;;; {Emacs local variables
 
 ;;; local variables:
-;;; mode: stumpwm
 ;;; mode: folding
 ;;; folded-file: t
-;;; stumpwm-mode: t
 ;;; end:
 
 ;;; }
