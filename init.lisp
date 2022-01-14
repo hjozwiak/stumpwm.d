@@ -35,7 +35,6 @@
 (load "/home/sektor/.stumpwm.d/tts.lisp")
 (setq *tts-engine* *tts-espeak*)
 
-;;; {Speak Actions:
 
 
 (defun speak-window-change (new old)
@@ -77,19 +76,17 @@ Use C-\ t to turn it on.")
   (when *tts-speak-messages*
     (tts-speak-list (mapcar #'stumpwm::uncolorify messages))))
 
-;;; }
 ;;; {Attach Handlers:
 
 (setq  *focus-window-hook* (list 'speak-window-change))
 (setq *new-window-hook* (list 'speak-this-window))
                         (setq *message-hook* (list 'speak-messages))
 
-;;; }
 ;;; {Chrome:
 
 (defcommand mumble ()
   ()
-  "Start  or switch to Chrome."
+  "Start  or switch to Mumble."
   (run-or-raise "/usr/bin/mumble" '(:class "mumble" :title "Mumble")))
 
 (define-key *root-map* (kbd "m") "mumble")
