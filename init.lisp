@@ -1,7 +1,6 @@
 (in-package :stumpwm)
-;;; {Variables:
-
-;;; Avoid focus getting stolen due to activity.
+(ql:quickload :slynk)
+(slynk:start-server :dont-close t)
 
 (setq *deny-raise-request* t)
 
@@ -123,12 +122,3 @@ Use C-\ t to turn it on.")
 (run-commands
 "restart-orca")
 ;;; }
-;;; {Emacs local variables
-
-;;; local variables:
-;;; mode: folding
-;;; folded-file: t
-;;; end:
-
-;;; }
-
