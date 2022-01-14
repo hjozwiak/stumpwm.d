@@ -1,7 +1,7 @@
 (in-package :stumpwm)
 (ql:quickload :slynk)
 (slynk:start-server :dont-close t)
-
+(load-module "swm-emacs")
 (setq *deny-raise-request* t)
 
 (defvar *emacspeak-dir*
@@ -29,18 +29,12 @@
                "sounds/pan-chimes/on.wav")
   "On icon.")
 
-;;; }
-;;; {Prefix key matches my screen setup:
 
 (set-prefix-key (kbd "C-t"))
 
-;;; }
-;;; {TTS
 (load "/home/sektor/.stumpwm.d/tts.lisp")
 (setq *tts-engine* *tts-espeak*)
-(tts-say "TTS: Ready to talk! ")
 
-;;; }
 ;;; {Speak Actions:
 
 
@@ -116,9 +110,26 @@ Use C-\ t to turn it on.")
           'string
           *emacspeak-dir*
           "/sounds/prompts/launch-wm.mp3")))
+(defcommand discord ()
+    ()
+  "Open Discord."
+  (run-or-raise "/usr/bin/discord --force-renderer-accessibility --enable-caret-browsing" '(:class "discord" :title "Discord")))
+(define-key *root-map* (kbd "d") "discord")
+(defcommand spotify ()
+    ()
+  "Opens up Spotify, naturally."
+  (run-or-raise "/usr/bin/spotify --force-renderer-accessibility --enable-caret-browsing" '(:class "spotify" :title "Spotify")))
+(define-key *root-map* (kbd "s") "spotify")
 
-
-;; Launching various other applications, namely Orca
+(defcommand brave ()
+    ()
+  "Open the Brave browser"
+  (run-or-raise "/usr/bin/brave --force-renderer-accessibility --enable-caret-browsing" '(:class "brave" :title "Brave")))
+(define-key *root-map* (kbd "b") "brave")
+(define-key *root-map* (kbd "e") "swm-emacs")
 (run-commands
-"restart-orca")
-;;; }
+ "restart-orca"
+ "discord"
+ "brave"
+ "spotify"
+ "emacs-daemon-start")
