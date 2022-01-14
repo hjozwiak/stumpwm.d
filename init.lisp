@@ -1,6 +1,6 @@
 (in-package :stumpwm)
 (ql:quickload :slynk)
-(slynk:start-server :dont-close t)
+(slynk:create-server :dont-close t :port 4001)
 (load-module "swm-emacs")
 (setq *deny-raise-request* t)
 
