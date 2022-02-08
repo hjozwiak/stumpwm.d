@@ -1,6 +1,6 @@
 (in-package :stumpwm)
 (ql:quickload :slynk)
-(slynk:create-server :dont-close t :port 4001)
+;(slynk:create-server :dont-close t)
 (load-module "swm-emacs")
 (setq *deny-raise-request* t)
 
@@ -117,7 +117,11 @@ Use C-\ t to turn it on.")
   "Opens up Spotify, naturally."
   (run-or-raise "/usr/bin/spotify --force-renderer-accessibility --enable-caret-browsing" '(:class "spotify" :title "Spotify")))
 (define-key *root-map* (kbd "s") "spotify")
-
+(defcommand sengi ()
+  ()
+  "Open up or switch to Sengi."
+  (run-or-raise "/usr/bin/sengi --force-renderer-accessibility --enable-caret-browsing" '(:class "sengi" :title "Sengi")))
+(define-key *root-map* (kbd "s") "sengi")
 (defcommand brave ()
     ()
   "Open the Brave browser"
